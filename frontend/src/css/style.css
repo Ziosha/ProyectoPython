@@ -43,7 +43,7 @@ a:focus {
 
 .dash {
   height: 100vh;
-  background: hsla(271, 49%, 10%, 0.685);
+  background: hsla(271, 49%, 10%, 0.822);
   display: flex;
   flex-direction: column;
   border-radius: 8px;
