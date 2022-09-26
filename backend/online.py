@@ -87,6 +87,25 @@ def compra_get():
     except Exception as ex:
         return('Error al observar las compras')
 
+@app.route('/reporte',methods=['GET'])
+def reporte():
+    try:
+        cursor=mysql.connection.cursor()
+        cursor.execute("""select 
+        usuario.Id_usuario, concat(usuario.Nombre_usuario,usuario.Apellido_Paterno,usuario.Apellido_Materno)Nombre,compra.ID_compra,producto.Nom_producto,producto.Precio_producto,compra.CreationDate
+        from usuario,compra,producto
+        where usuario.ID_usuario=compra.ID_usuario and compra.Cod_producto=producto.Cod_producto
+        """)
+        datos=cursor.fetchall()
+        contenedor=[]
+        for dato in datos:
+            reader={'Id_usuario':dato[0],'Nombre':dato[1],'ID_compra': dato[2],'Nom_producto':dato[3],'Precio_producto':dato[4],'CreationDate':dato[5]}
+            contenedor.append(reader)
+        return contenedor        
+    except Exception as ex:
+        return('Error al observar el reporte')
+
+
 #____________________POST______________________________________________
 #POST USUARIO
 @app.route('/usuario',methods=['POST'])
@@ -101,6 +120,7 @@ def usuario_add():
         cont=request.json['Contraseña']
         tel=request.json['Telefono']
     
+
 
         cursor=mysql.connection.cursor()
         sql="""Insert into Usuario(Nombre_usuario, Apellido_Paterno, Apellido_Materno,Pais,Correo,Contraseña,Telefono,CreationDate, admin)
@@ -123,10 +143,11 @@ def categoria_add():
         de=request.json['Deta_categoria']
         pu=request.json['Publico']
         cre=request.json['CreationDate']
+ 
         
         cursor=mysql.connection.cursor()
         sql="""Insert into Categoria(Nom_cateogoria, Deta_categoria,Publico,CreationDate)
-        values('{0}','{1}','{2}','{3}')""".format(no,de,pu,cre)
+        values('{0}','{1}','{2}',now())""".format(no,de,pu,cre)
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Categoria añadida'})
@@ -144,10 +165,11 @@ def producto_add():
         fe=request.json['Fecha_lanzamiento']
         co=request.json['Cod_categoria']
         cre=request.json['CreationDate']
+
         
         cursor=mysql.connection.cursor()
         sql="""Insert into Producto(Nom_producto, Precio_producto,Descripcion,Fecha_lanzamiento,Cod_categoria,CreationDate)
-        values('{0}',{1},'{2}','{3}',{4},'{5}')""".format(no,pre,des,fe,co,cre)
+        values('{0}',{1},'{2}','{3}',{4},now())""".format(no,pre,des,fe,co)
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Producto añadido'})
@@ -164,10 +186,11 @@ def factura_add():
         ti=request.json['Tipo_moneda']
         to=request.json['Total']
         cre=request.json['CreationDate']
+
         
         cursor=mysql.connection.cursor()
         sql="""Insert into Factura(ID_usuario, Productos,Tipo_moneda,Total,CreationDate)
-        values({0},'{1}','{2}','{3}','{4}','{5}')""".format(nu,pro,ti,to,cre)
+        values({0},'{1}','{2}','{3}','{4}',now())""".format(nu,pro,ti,to,cre)
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Factura añadida'})
@@ -177,7 +200,7 @@ def factura_add():
 #POST COMPRA
 @app.route('/compra',methods=['POST'])
 def compra_add():
-    try:        
+    #try:        
 
         co=request.json['Cod_producto']
         id=request.json['ID_usuario']
@@ -188,8 +211,8 @@ def compra_add():
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Compra añadida'})
-    except Exception as ex:
-     return jsonify({'Mensaje': 'Error al añadir la Compra'})
+    #except Exception as ex:
+     #return jsonify({'Mensaje': 'Error al añadir la Compra'})
 
 #_____________________________PUT________________________________
 #USUARIO
@@ -204,11 +227,11 @@ def usuario_up(codigo):
         cor=request.json['Correo']
         con=request.json['Contraseña']
         tel=request.json['Telefono']
-        cre=request.json['CreationDate']
+     
         cursor=mysql.connection.cursor()
         sql="""Update Usuario set Nombre_usuario='{0}'
-        ,Apellido_Paterno='{1}',Apellido_Materno='{2}',Pais='{3}',Correo='{4}',Contraseña='{5}',Telefono={6},CreationDate='{7}'
-        where ID_usuario={8}""".format(nom,apepa,apema,pai,cor,con,tel,cre,codigo)  
+        ,Apellido_Paterno='{1}',Apellido_Materno='{2}',Pais='{3}',Correo='{4}',Contraseña='{5}',Telefono={6}
+        where ID_usuario={7}""".format(nom,apepa,apema,pai,cor,con,tel,codigo)  
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Se actualizo con exito'})
@@ -226,12 +249,12 @@ def producto_up(codigo):
         des=request.json['Descripcion']
         fec=request.json['Fecha_lanzamiento']
         cod=request.json['Cod_categoria']
-        cre=request.json['CreationDate']
+
         
         cursor=mysql.connection.cursor()
         sql="""Update Producto set Nom_producto='{0}'
-        ,Precio_producto={1},Descripcion='{2}',Fecha_lanzamiento='{3}',Cod_categoria={4},CreationDate='{5}'
-        where Cod_producto={6}""".format(nom,pre,des,fec,cod,cre,codigo)  
+        ,Precio_producto={1},Descripcion='{2}',Fecha_lanzamiento='{3}',Cod_categoria={4}
+        where Cod_producto={5}""".format(nom,pre,des,fec,cod,codigo)  
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Se actualizo con exito'})
@@ -246,11 +269,11 @@ def categoria_up(codigo):
         nom=request.json['Nom_cateogoria']
         det=request.json['Deta_categoria']
         pub=request.json['Publico']
-        cre=request.json['CreationDate']
+  
         cursor=mysql.connection.cursor()
         sql="""Update Categoria set Nom_cateogoria='{0}'
-        ,Deta_categoria='{1}',Publico='{2}',CreationDate='{3}'
-        where Cod_categoria={4}""".format(nom,det,pub,cre,codigo)  
+        ,Deta_categoria='{1}',Publico='{2}'
+        where Cod_categoria={3}""".format(nom,det,pub,codigo)  
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Se actualizo con exito'})
@@ -265,11 +288,11 @@ def compra_up(codigo):
         cod=request.json['Cod_producto']
         id=request.json['ID_usuario']
         num=request.json['Num_recibo']
-        cre=request.json['CreationDate']
+
         cursor=mysql.connection.cursor()
         sql="""Update Compra set Cod_producto={0}
-        ,ID_usuario={1},Num_recibo={2},CreationDate='{3}'
-        where ID_compra={4}""".format(cod,id,num,cre,codigo)  
+        ,ID_usuario={1},Num_recibo={2}
+        where ID_compra={3}""".format(cod,id,num,codigo)  
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Se actualizo con exito'})
@@ -285,11 +308,11 @@ def factura_up(codigo):
         pro=request.json['Productos']
         ti=request.json['Tipo_moneda']
         to=request.json['Total']
-        cre=request.json['CreationDate']
+
         cursor=mysql.connection.cursor()
         sql="""Update Factura set ID_usuario={0}
-        ,Productos='{1}',Tipo_moneda='{2}',Total={3},CreationDate='{4}'
-        where Num_recibo={5}""".format(id,pro,ti,to,cre,codigo)  
+        ,Productos='{1}',Tipo_moneda='{2}',Total={3}
+        where Num_recibo={4}""".format(id,pro,ti,to,codigo)  
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Se actualizo con exito'})
