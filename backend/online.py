@@ -179,12 +179,10 @@ def compra_add():
 
         co=request.json['Cod_producto']
         id=request.json['ID_usuario']
-        num=request.json['Num_recibo']
-        cre=request.json['CreationDate']
         
         cursor=mysql.connection.cursor()
-        sql="""Insert into Compra(Cod_producto, ID_usuario,Num_recibo,CreationDate)
-        values({0},{1},{2},'{3}')""".format(co,id,num,cre)
+        sql="""Insert into Compra(Cod_producto, ID_usuario,CreationDate)
+        values({0},{1},now())""".format(co,id)
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Compra añadida'})

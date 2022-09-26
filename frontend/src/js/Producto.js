@@ -3,7 +3,7 @@ let rootGame =  document.getElementById('root'),
     title = document.getElementById('title');
 
 
-const rendergames = (i, t, d, p) => 
+const rendergames = (i, t, d, p, cod) => 
 {   
     
     return `
@@ -13,7 +13,7 @@ const rendergames = (i, t, d, p) =>
         <h5 class="card-title">${t}</h5>
         <p class="card-text">${d}</p>
         <p class="card-text">Precio: ${p}</p>
-        <a href="#" class="btn btn-primary">Comprar</a>
+        <a href="#" class="btn btn-primary" onclick="comprar(${cod})">Comprar</a>
     </div>
     </div>
     `
@@ -26,8 +26,8 @@ homGame.addEventListener('click',()=> {
                     rootGame.innerHTML = null;
                     title.innerHTML = "JUEGOS"
                     data.forEach(element => {
-                        const {Image, Nom_producto, Descripcion, Precio_producto} = element
-                        rootGame.innerHTML += rendergames(Image, Nom_producto, Descripcion, Precio_producto)
+                        const {Image, Nom_producto, Descripcion, Precio_producto, Cod_producto} = element
+                        rootGame.innerHTML += rendergames(Image, Nom_producto, Descripcion, Precio_producto, Cod_producto)
                     });
                 })
                 .catch(error => console.log(error))
@@ -35,6 +35,29 @@ homGame.addEventListener('click',()=> {
 
 
 
+const comprar =(c) =>
+{
+    var datos = {
+        Cod_producto : c,
+        ID_usuario : 1
+    }
+    const comprar = fetch(`http://localhost:3000/compra`,{
+        method: 'POST',
+        body : JSON.stringify(datos),
+        headers : {'Content-Type': 'application/json'}
+      })
+      comprar.then(resp => resp.json())
+              .then(data => {
+                  if(data.statusCode = 200)
+                  {
+                    alert("Producto Comprado")
+                  }
+                  else{
+                    alert("Producto no modificado")
+                  }
+              })
+              .catch(error => console.log(error))
+}
 
 
 
