@@ -39,7 +39,7 @@ const comprar =(c) =>
 {
     var datos = {
         Cod_producto : c,
-        ID_usuario : 1
+        ID_usuario : 2
     }
     const comprar = fetch(`http://localhost:3000/compra`,{
         method: 'POST',
