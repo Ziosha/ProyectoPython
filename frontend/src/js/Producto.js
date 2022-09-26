@@ -3,6 +3,7 @@ let rootGame =  document.getElementById('root'),
     title = document.getElementById('title');
 
 
+
 const rendergames = (i, t, d, p, cod) => 
 {   
     
@@ -58,6 +59,10 @@ const comprar =(c) =>
               })
               .catch(error => console.log(error))
 }
+
+
+
+
 
 
 

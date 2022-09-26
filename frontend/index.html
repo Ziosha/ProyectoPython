@@ -22,6 +22,7 @@
           </div>
         </div>
         <div class="header__optionss">
+          
           <a href="#" class="header__links">Log in</a>
           <a href="#" class="header__links">Sign up</a>
         </div>
@@ -86,12 +87,29 @@
           <div id="root">
           </div>
         </div>
-        
       
       </div>
+      <div><a href="#" id="paypal-button-container" ></a></div>
 
     </div>
-
+  <script src="https://www.paypal.com/sdk/js?client-id=AduMtaUmwqhRg8R8uYEE2OYXZIOC7Y6hTnJSTnSrgHGujmL9uZL9OSghbgwUXv2ZMQ0Zc0T_UqujmZAs&currency=USD"></script>
+  <script>
+     paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                // ...
+                purchase_units: [{
+                    amount: {
+                        value: 100
+                    }
+                }],
+            });
+        },
+        onApprove: function(data, actions) {
+            // ...
+        }
+    }).render('#paypal-button-container');
+  </script>
   <script src="src/js/Producto.js"></script>
   <script src="src/js/Users.js"></script>
   <script src="src/js/Home.js"></script>
