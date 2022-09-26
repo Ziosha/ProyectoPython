@@ -24,6 +24,11 @@ body {
   
 }
 
+#root
+{
+  width: 100%;
+}
+
 button {
   font-size: inherit;
   font-family: inherit;
@@ -266,3 +271,35 @@ a:focus {
 .table{
   font-size: 2em;
 }
+
+.form {
+        width: 35rem;
+        height: 50rem;
+        margin: 6% 25em;
+        background-color: rgba(17, 16, 16, 0.774);
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+      }
+      .form h1 {
+        font-size: 4rem;
+      }
+      .table {
+        margin-left: 3rem;
+      }
+      
+
+      .table input[type="submit"],
+      input[type="reset"] {
+        background: rgba(31, 17, 110, 0.65);
+        width: 14rem;
+        height: 3rem;
+        border: none;
+        color: white;
+      }
+      .table input[type="submit"]:hover,
+      input[type="reset"]:hover {
+        color: black;
+        background-color: rgba(202, 201, 207, 0.74);
+      }

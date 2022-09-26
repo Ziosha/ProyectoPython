@@ -100,16 +100,18 @@ def usuario_add():
         co=request.json['Correo']
         cont=request.json['Contraseña']
         tel=request.json['Telefono']
-        cre=request.json['CreationDate']
+    
 
         cursor=mysql.connection.cursor()
-        sql="""Insert into Usuario(Nombre_usuario, Apellido_Paterno, Apellido_Materno,Pais,Correo,Contraseña,Telefono,CreationDate)
-        values('{0}','{1}','{2}','{3}','{4}','{5}',{6},'{7}')""".format(nom,ape,apm,pa,co,cont,tel,cre)
+        sql="""Insert into Usuario(Nombre_usuario, Apellido_Paterno, Apellido_Materno,Pais,Correo,Contraseña,Telefono,CreationDate, admin)
+        values('{0}','{1}','{2}','{3}','{4}','{5}',{6},now(), 0)""".format(nom,ape,apm,pa,co,cont,tel)
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Usuario añadido'})
     except Exception as ex:
-     return jsonify({'Mensaje': 'Error al añadir al usuario'})
+        data = jsonify({'Mensaje': 'Error al añadir al usuario'})
+        data.statusCode = 400
+        return data
 
 
 #POST CATEGORIA
