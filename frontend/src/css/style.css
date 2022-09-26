@@ -196,6 +196,69 @@ a:focus {
 
 .content h1{
   text-align: center;
-  margin-top: 2em;
   font-weight: bold;
+}
+
+.banner {
+  position: static;
+  width: 95vw;
+  height: 90vh;
+  box-shadow: 2px 0 12px rgba(241, 241, 241, 0.342);
+  background-size: 100% 100%;
+  overflow: hidden;
+  animation: banner 10s infinite;
+  animation-direction: alternate;
+  z-index: 50;
+  margin-top: -3em;
+}
+
+.banner header {
+  font-family: Helvetica;
+  width: 800px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  color: white; 
+}
+
+.banner header h1{
+  font-size: 4em;
+  background-color: rgba(0, 0, 0, 0.555);
+  padding: 1em;
+}
+
+@media only screen and (min-width: 400px) and (max-width: 767px) {
+  .banner {
+    width: 400px;
+    height: 200px;
+    z-index: 50;
+  }
+}
+@keyframes banner {
+  0%,
+  30% {
+    background-image: url(https://www.xtrafondos.com/descargar.php?id=5036&resolucion=2560x1440);
+    opacity: 1;
+  }
+  31%,
+  34% {
+    opacity: 0.5;
+  }
+  35%,
+  65% {
+    background-image: url(https://p4.wallpaperbetter.com/wallpaper/123/649/99/video-games-remember-me-wallpaper-preview.jpg);
+    opacity: 1;
+  }
+  66%,
+  69% {
+    opacity: 0.5;
+  }
+  70%,
+  100% {
+    background-image: url(https://p4.wallpaperbetter.com/wallpaper/601/497/256/video-games-infamous-wallpaper-preview.jpg);
+    opacity: 1;
+  }
 }

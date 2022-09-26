@@ -3,7 +3,7 @@ let rootGame =  document.getElementById('root'),
     title = document.getElementById('title');
 
 
-const render = (i, t, d, p) => 
+const rendergames = (i, t, d, p) => 
 {   
     
     return `
@@ -13,7 +13,7 @@ const render = (i, t, d, p) =>
         <h5 class="card-title">${t}</h5>
         <p class="card-text">${d}</p>
         <p class="card-text">Precio: ${p}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="#" class="btn btn-primary">Comprar</a>
     </div>
     </div>
     `
@@ -27,10 +27,14 @@ homGame.addEventListener('click',()=> {
                     title.innerHTML = "JUEGOS"
                     data.forEach(element => {
                         const {Image, Nom_producto, Descripcion, Precio_producto} = element
-                        rootGame.innerHTML += render(Image, Nom_producto, Descripcion, Precio_producto)
+                        rootGame.innerHTML += rendergames(Image, Nom_producto, Descripcion, Precio_producto)
                     });
                 })
                 .catch(error => console.log(error))
 })
+
+
+
+
 
 
