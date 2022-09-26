@@ -164,17 +164,19 @@ def producto_add():
         des=request.json['Descripcion']
         fe=request.json['Fecha_lanzamiento']
         co=request.json['Cod_categoria']
-        cre=request.json['CreationDate']
+        im = request.json['Image']
 
         
         cursor=mysql.connection.cursor()
-        sql="""Insert into Producto(Nom_producto, Precio_producto,Descripcion,Fecha_lanzamiento,Cod_categoria,CreationDate)
-        values('{0}',{1},'{2}','{3}',{4},now())""".format(no,pre,des,fe,co)
+        sql="""Insert into Producto(Nom_producto, Precio_producto,Descripcion,Fecha_lanzamiento,PhotoGame,Cod_categoria,CreationDate )
+        values('{0}',{1},'{2}','{3}','{4}',{5},now())""".format(no,pre,des,fe,im,co)
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Producto añadido'})
     except Exception as ex:
-     return jsonify({'Mensaje': 'Error al añadir el producto'})
+        data = jsonify({'Mensaje': 'Error al añadir el producto'})
+        data.statusCode = 400
+        return data
 
 #POST FACTURA
 @app.route('/factura',methods=['POST'])
