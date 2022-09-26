@@ -104,7 +104,7 @@ def usuario_add():
 
         cursor=mysql.connection.cursor()
         sql="""Insert into Usuario(Nombre_usuario, Apellido_Paterno, Apellido_Materno,Pais,Correo,Contraseña,Telefono)
-        values('{0}','{1}','{2}','{3}','{4}','{5}',{6})""".format(nom,ape,apm,pa,co,cont,tel,cre)
+        values('{0}','{1}','{2}','{3}','{4}','{5}',{6})""".format(nom,ape,apm,pa,co,cont,tel)
         cursor.execute(sql)
         mysql.connection.commit()
         return jsonify({'Mensaje':'Usuario añadido'})
