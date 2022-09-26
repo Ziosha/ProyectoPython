@@ -7,7 +7,7 @@ cors=CORS(app,resources={r'/*':{'origins':'*'}})
 #_________________________________________________________________
 app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
-app.config['MYSQL_PASSWORD']='12345678'
+app.config['MYSQL_PASSWORD']='123456'
 app.config['MYSQL_DB']='db_online'
 mysql = MySQL(app)
 #_________________________________GET______________________________
@@ -21,7 +21,7 @@ def usuario_get():
         datos=cursor.fetchall()
         contenedor=[]
         for dato in datos:
-            reader={'ID_usuario':dato[0],'Nombre_usuario':dato[1],'Apellido_Paterno':dato[2],'Apellido_Materno':dato[3],'Pais':dato[4],'Correo':dato[5],'Contraseña':dato[6],'Telefono':dato[7],'Admin':dato[8],'CreationDate':dato[9]}
+            reader={'ID_usuario':dato[0],'Nombre_usuario':dato[1],'Apellido_Paterno':dato[2],'Apellido_Materno':dato[3],'Pais':dato[4],'Correo':dato[5],'Contraseña':dato[6],'Telefono':dato[7]}
             contenedor.append(reader)
         return contenedor        
     except Exception as ex:
@@ -51,7 +51,7 @@ def producto_get():
         datos=cursor.fetchall()
         contenedor=[]
         for dato in datos:
-            reader={'Cod_producto': dato[0],'Nom_producto': dato[1],'Precio_producto':dato[2],'Descripcion':dato[3],'Fecha_lanzamiento':dato[4],'Cod_categoria':dato[5]}
+            reader={'Cod_producto': dato[0],'Nom_producto': dato[1],'Precio_producto':dato[2],'Descripcion':dato[3],'Fecha_lanzamiento':dato[4],'Image':dato[5], 'Cod_Categoria':dato[6]}
             contenedor.append(reader)
         return contenedor        
     except Exception as ex:
